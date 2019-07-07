@@ -2,10 +2,10 @@
 ### zshrc
 Copy .zshrc to $HOME
 
-    cp .zshrc ~/
+    cp .zshrc $HOME/
 
 ### Theme
-Copy custom agnoster theme to ~/.oh-my-zsh/custom/themes/
+Copy custom agnoster theme to $HOME/.oh-my-zsh/custom/themes/
 
-    cp agnoster-nanof.zsh-theme ~/.oh-my-zsh/custom/themes/
+    cp agnoster-nanof.zsh-theme $HOME/.oh-my-zsh/custom/themes/
 
