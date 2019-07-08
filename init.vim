@@ -11,6 +11,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
   Plug 'morhetz/gruvbox'
   Plug 'ycm-core/YouCompleteMe'
+  Plug 'rking/ag.vim'
   Plug 'jiangmiao/auto-pairs'
   Plug 'easymotion/vim-easymotion'
   Plug 'vim-airline/vim-airline'
@@ -46,6 +47,8 @@ set noundofile
 
 " Variables  
 let g:mapleader=','
+" If something goes wrong with ruby gem neovim
+""" let g:ruby_host_prog='~/.gem/bin/neovim-ruby-host'
 " Airplane settings
 let g:airline_theme='zenburn'
 let g:airline_powerline_fonts=1
