@@ -20,11 +20,12 @@ source $ZSH/oh-my-zsh.sh
 ### Bash
 alias ll="ls -alh --group-directories-first"
 alias vim="nvim"
+alias sudo="sudo "
 ### GIT
 alias ga="git add"
 alias gc="git commit"
 alias gs="git status"
-alias gh="git log --pretty=oneline"
+alias gh="git log --pretty=format:'%Cred%h %C(#FF7F50)%d %Cgreen[%an] %cr%n%n%B' --graph"
 alias gb="git branch"
 alias go="git checkout"
 
