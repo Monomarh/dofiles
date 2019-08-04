@@ -1,3 +1,5 @@
+set encoding=UTF-8
+
 " Install vim-plug if doesn't exist
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -9,30 +11,31 @@ endif
 " Vim-plug bootstrap
 call plug#begin('~/.config/nvim/plugged')
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-  Plug 'morhetz/gruvbox'
   Plug 'ycm-core/YouCompleteMe'
   Plug 'rking/ag.vim'
   Plug 'jiangmiao/auto-pairs'
   Plug 'easymotion/vim-easymotion'
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes' 
-  " Git Section
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'airblade/vim-gitgutter'
   " PHP section
   Plug 'StanAngeloff/php.vim', {'for': 'php'}
   Plug 'arnaud-lb/vim-php-namespace', {'for': 'php'}
   Plug 'sumpygump/php-documentor-vim', {'for': 'php'}
+  " Theme section
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'morhetz/gruvbox'
 call plug#end()
 
 " Nvim settings
 set number
+set hlsearch
+set incsearch
 set expandtab
 set tabstop=2
 set autoindent
-set hlsearch
 set wildmenu
-set incsearch
 set autoread
 syntax on
 
@@ -44,8 +47,9 @@ set background=dark
 set noswapfile
 set nobackup
 set noundofile
+set list
 
-" Variables  
+" Variables
 let g:mapleader=','
 " If something goes wrong with ruby gem neovim
 """ let g:ruby_host_prog='~/.gem/bin/neovim-ruby-host'
