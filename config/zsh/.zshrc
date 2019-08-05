@@ -15,6 +15,8 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+# Git completion
+source $HOME/.zsh/git-completion
 
 # User configuration
 
@@ -30,7 +32,6 @@ source $ZSH/oh-my-zsh.sh
   alias gh="git log --pretty=format:'%Cred%h %C(#FF7F50)%d %Cgreen[%an] %cr%n%n%B' --graph"
   alias gb="git branch"
   alias go="git checkout"
-
 
 # Fix for arrow-key searching
   ### start typing + [Up-Arrow] - fuzzy find history forward

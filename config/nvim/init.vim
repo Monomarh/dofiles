@@ -15,14 +15,17 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'rking/ag.vim'
   Plug 'jiangmiao/auto-pairs'
   Plug 'easymotion/vim-easymotion'
+  " Git Section
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'airblade/vim-gitgutter'
+  Plug 'tpope/vim-fugitive'
   " PHP section
   Plug 'StanAngeloff/php.vim', {'for': 'php'}
   Plug 'arnaud-lb/vim-php-namespace', {'for': 'php'}
   Plug 'sumpygump/php-documentor-vim', {'for': 'php'}
   " Theme section
   Plug 'ryanoasis/vim-devicons'
+  Plug 'Yggdroot/indentLine'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'morhetz/gruvbox'
@@ -30,11 +33,15 @@ call plug#end()
 
 " Nvim settings
 set number
+set list
 set hlsearch
 set incsearch
 set expandtab
 set tabstop=2
+set shiftwidth=2
 set autoindent
+set smarttab
+set smartindent
 set wildmenu
 set autoread
 syntax on
@@ -43,11 +50,14 @@ syntax on
 colorscheme gruvbox
 set background=dark
 
+" Indent line settings
+let g:indentLine_color_dark=1
+let g:indentLine_char_list='.'
+
 " Helpful files for nvim redactor
 set noswapfile
 set nobackup
 set noundofile
-set list
 
 " Variables
 let g:mapleader=','
