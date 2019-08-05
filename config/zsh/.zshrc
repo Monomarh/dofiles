@@ -1,5 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+fpath=(~/.zsh $fpath)
 
 # Theme of zsh
 ZSH_THEME="agnoster-custom"
@@ -9,14 +10,12 @@ ZSH_THEME="agnoster-custom"
 
 plugins=(
   git
-  zsh-syntax-highlighting  
+  zsh-syntax-highlighting
   zsh-autosuggestions
   vi-mode
 )
 
 source $ZSH/oh-my-zsh.sh
-# Git completion
-source $HOME/.zsh/git-completion
 
 # User configuration
 

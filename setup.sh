@@ -11,4 +11,5 @@ echo '                                                       |_|    '
 ln -sf $HOME/dotfiles/config/nvim/init.vim $HOME/.config/nvim/init.vim
 ln -sf $HOME/dotfiles/config/zsh/.zshrc $HOME/.zshrc
 ln -sf $HOME/dotfiles/config/tmux/.tmux.conf $HOME/.tmux.conf
-ln -sf $HOME/dotfiles/config/git/.gitconfig $HOME/.gitconfig
+# ln -sf $HOME/dotfiles/config/git/.gitconfig $HOME/.gitconfig
+# curl -o ~/.zsh/_git https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
