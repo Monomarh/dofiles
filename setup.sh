@@ -30,7 +30,13 @@ if [ "$isGitConf" = 'y' ] || [ "$isGitConf" = 'Y' ]; then
   SPIN_PID=$!
   trap 'kill -9 "$SPIN_PID"' $(seq 0 15)
 
-   ln -sf "$HOME"/dotfiles/configs/git/.gitconfig "$HOME"/.gitconfig
+  echo -en '\nEnter you github email: '
+  read -r gitHubEmail
+  echo -en '\nEnter you github username: '
+  read -r gitHubUsername
+  exec $(sed "s/  email =/  email = $gitHubEmail/gi" configs/git/.gitconfig > configs/git/.gitconfig)
+  exec $(sed "s/  name =/  name = $gitHubUsername/gi" configs/git/.gitconfig > configs/git/.gitconfig)
+  # ln -sf "$HOME"/dotfiles/configs/git/.gitconfig "$HOME"/.gitconfig
   sleep 2
 
   kill -9 $SPIN_PID
