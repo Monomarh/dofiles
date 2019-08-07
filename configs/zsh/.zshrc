@@ -4,7 +4,7 @@ fpath=(~/.zsh $fpath)
 
 # Theme of zsh
 ZSH_THEME="agnoster-custom"
-$PROMPT_EOL_MARK=''
+PROMPT_EOL_MARK=''
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
   ### Color for autoseggestions
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=yellow"
