@@ -2,6 +2,8 @@
 export ZSH="$HOME/.oh-my-zsh"
 fpath=(~/.zsh $fpath)
 
+autoload -Uz compinit && compinit
+
 # Theme of zsh
 ZSH_THEME="agnoster-custom"
 PROMPT_EOL_MARK=''

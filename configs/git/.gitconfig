@@ -1,11 +1,11 @@
-
 [user]
   email =
   name =
 [core]
-  excludesfile = config/git/.gitignore
+  excludesfile = ~/dotfiles/configs/git/.gitignore
   editor = nvim
-  pager = less -+F
+  pager = tr -d '\\r' | less -REX
+  autocrlf = true
 [diff]
   tool = vimdiff
 [difftool]
