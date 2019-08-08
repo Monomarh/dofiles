@@ -34,8 +34,8 @@ if [ "$isGitConf" = 'y' ] || [ "$isGitConf" = 'Y' ]; then
   read -r gitHubEmail
   echo -en '\nEnter you github username: '
   read -r gitHubUsername
-  exec $(sed "s/  email =/  email = $gitHubEmail/gi" configs/git/.gitconfig > configs/git/.gitconfig)
-  exec $(sed "s/  name =/  name = $gitHubUsername/gi" configs/git/.gitconfig > configs/git/.gitconfig)
+  sed "s/  email =/  email = $gitHubEmail/gi" configs/git/.gitconfig_base > configs/git/.gitconfig
+  sed "s/  name =/  name = $gitHubUsername/gi" configs/git/gitconfig_base > configs/git/.gitconfig
   # ln -sf "$HOME"/dotfiles/configs/git/.gitconfig "$HOME"/.gitconfig
   sleep 2
 
