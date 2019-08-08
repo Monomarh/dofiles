@@ -14,87 +14,114 @@ spin()
   do
     for i in $(seq 0 7)
     do
-      echo -n "${spinner:$i:1}"
+      echo -en "${spinner:$i:1}"
       echo -en "\010"
       sleep 0.1
     done
   done
 }
 
+spinStart()
+{
+  spin &
+  SPIN_PID=$!
+}
+
+spinEnd()
+{
+  if [ "$SPIN_PID" ]; then
+    kill -9 "$SPIN_PID"
+    unset SPIN_PID
+  fi
+}
+
+trap spinEnd $(seq 0 15)
+
 # create symlinks to dotfiles
-echo -n 'Would you setup git configs(y/n)?'
-read -rs isGitConf
+echo -n 'Would you setup git configs(y/n)? '; read -rs isGitConf
 if [ "$isGitConf" = 'y' ] || [ "$isGitConf" = 'Y' ]; then
   echo -e '\nSetting git configs...'
-  spin &
-  SPIN_PID=$!
-  trap 'kill -9 "$SPIN_PID"' $(seq 0 15)
 
-  echo -en '\nEnter you github email: '
-  read -r gitHubEmail
-  echo -en '\nEnter you github username: '
-  read -r gitHubUsername
-  sed "s/  email =/  email = $gitHubEmail/gi" configs/git/.gitconfig_base > configs/git/.gitconfig
-  sed "s/  name =/  name = $gitHubUsername/gi" configs/git/gitconfig_base > configs/git/.gitconfig
-  # ln -sf "$HOME"/dotfiles/configs/git/.gitconfig "$HOME"/.gitconfig
+  if [ -e "$HOME/dotfiles/configs/git/.gitconfig" ]; then
+    existGitName=$(grep 'name =' "$HOME"/dotfiles/configs/git/.gitconfig | sed 's/=/is/' | sed 's/  //')
+    echo -n "Your git $existGitName(y/n)? "; read -rs isExistGitNameValid; echo
+    if [ "$isExistGitNameValid" = 'n' ] || [ "$isExistGitNameValid" = 'N' ]; then
+      echo -en 'Enter you git username: '; read -r gitName
+      sed -i "s/  name =.*/  name = $gitName/gi" "$HOME"/dotfiles/configs/git/.gitconfig
+    fi
+
+    existGitEmail=$(grep 'email =' "$HOME"/dotfiles/configs/git/.gitconfig | sed 's/=/is/' | sed 's/  //')
+    echo -n "Your git $existGitEmail(y/n)? "; read -rs isExistGitEmailValid; echo
+    if [ "$isExistGitEmailValid" = 'n' ] || [ "$isExistGitEmailValid" = 'N' ]; then
+      echo -en 'Enter you git email: '; read -r gitName
+      sed -i "s/  email =.*/  email = $gitName/gi" "$HOME"/dotfiles/configs/git/.gitconfig
+    fi
+  else
+    echo -en 'Enter you git email: '; read -r gitEmail
+    echo -en 'Enter you git username: '; read -r gitName
+    sed "s/  email =/  email = $gitEmail/gi; s/  name =/  name = $gitName/gi" \
+      "$HOME"/dotfiles/configs/git/.gitconfig_base > "$HOME"/dotfiles/configs/git/.gitconfig
+  fi
+
+  spinStart
+
+  ln -sf "$HOME"/dotfiles/configs/git/.gitconfig "$HOME"/.gitconfig
+
   sleep 2
+  spinEnd
 
-  kill -9 $SPIN_PID
-  echo -e '\nInstallation of git configs is completed!\n'
+  echo -e '\010Installation of git configs is completed!\n'
 else
   echo -e '\nNot setup'
 fi
 
-echo -n 'Would you setup zsh configs(y/n)?'
-read -rs isZshConf
+echo -n 'Would you setup zsh configs(y/n)? '; read -rs isZshConf
 if [ "$isZshConf" = 'y' ] || [ "$isZshConf" = 'Y' ]; then
   echo -e '\nSetting zsh configs...'
-  spin &
-  SPIN_PID=$!
-  trap 'kill -9 "$SPIN_PID"' $(seq 0 15)
+
+  spinStart
 
   ln -sf "$HOME"/dotfiles/configs/zsh/.zshrc "$HOME"/.zshrc
-  curl -o ~/.zsh/_git https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
-  sleep 2
+  curl -o "$HOME"/.zsh/_git https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
 
-  kill -9 $SPIN_PID
-  echo -e '\nInstallation of zsh configs is completed!\n'
+  sleep 2
+  spinEnd
+
+  echo -e '\010Installation of zsh configs is completed!\n'
 else
   echo -e '\nNot setup'
 fi
 
-echo -n 'Would you setup tmux configs(y/n)?'
+echo -n 'Would you setup tmux configs(y/n)? '
 read -rs isTmuxConf
 if [ "$isTmuxConf" = 'y' ] || [ "$isTmuxConf" = 'Y' ]; then
   echo -e '\nSetting tmux configs...'
-  spin &
-  SPIN_PID=$!
-  trap 'kill -9 "$SPIN_PID"' $(seq 0 15)
+
+  spinStart
 
   ln -sf "$HOME"/dotfiles/configs/tmux/.tmux.conf "$HOME"/.tmux.conf
-  sleep 2
 
-  kill -9 $SPIN_PID
-  echo -e '\nInstallation of tmux configs is completed!\n'
+  sleep 2
+  spinEnd
+
+  echo -e '\010Installation of tmux configs is completed!\n'
 else
   echo -e '\nNot setup'
 fi
 
-echo -n 'Would you setup nvim configs(y/n)?'
+echo -n 'Would you setup nvim configs(y/n)? '
 read -rs isNvimConf
 if [ "$isNvimConf" = 'y' ] || [ "$isNvimConf" = 'Y' ]; then
   echo -e '\nSetting nvim configs...'
-  spin &
-  SPIN_PID=$!
-  trap 'kill -9 "$SPIN_PID"' $(seq 0 15)
+
+  spinStart
 
   ln -sf "$HOME"/dotfiles/configs/nvim/init.vim "$HOME"/.config/nvim/init.vim
-  sleep 2
 
-  kill -9 $SPIN_PID
-  echo -e '\nInstallation of nvim configs is completed!\n'
+  sleep 2
+  spinEnd
+
+  echo -e '\010Installation of nvim configs is completed!\n'
 else
   echo -e '\nNot setup'
 fi
-
-exit 0

@@ -31,6 +31,7 @@ source $ZSH/oh-my-zsh.sh
   alias ga="git add"
   alias gc="git commit"
   alias gs="git status -sb"
+  alias gsv="git status -vv"
   alias gh="git log --pretty=format:'%Cred%h %C(#FF7F50)%d %Cgreen[%an] %cr%n%n%B' --graph"
   alias gb="git branch"
   alias go="git checkout"
