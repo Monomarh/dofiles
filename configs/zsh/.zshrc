@@ -13,6 +13,7 @@ PROMPT_EOL_MARK=''
 
 plugins=(
   git
+  gitfast
   zsh-syntax-highlighting
   zsh-autosuggestions
   vi-mode
