@@ -5,7 +5,6 @@
   excludesfile = ~/dotfiles/configs/git/.gitignore
   editor = nvim
   pager = tr -d '\\r' | less -REX
-  autocrlf = true
 [diff]
   tool = vimdiff
 [difftool]
