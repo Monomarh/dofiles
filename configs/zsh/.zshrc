@@ -5,7 +5,7 @@ fpath=(~/.zsh $fpath)
 autoload -Uz compinit && compinit
 
 # Theme of zsh
-ZSH_THEME="agnoster-custom"
+ZSH_THEME="miloshadzic"
 PROMPT_EOL_MARK=''
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
   ### Color for autoseggestions
