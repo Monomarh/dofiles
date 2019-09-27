@@ -1,5 +1,3 @@
-set encoding=UTF-8
-
 " Install vim-plug if doesn't exist
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -10,7 +8,7 @@ endif
 
 " Vim-plug bootstrap
 call plug#begin('~/.config/nvim/plugged')
-  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+  Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
   Plug 'ycm-core/YouCompleteMe'
   Plug 'rking/ag.vim'
   Plug 'jiangmiao/auto-pairs'
@@ -28,7 +26,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'Yggdroot/indentLine'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'morhetz/gruvbox'
+  Plug 'dracula/vim'
 call plug#end()
 
 " Nvim settings
@@ -47,8 +45,7 @@ set autoread
 syntax on
 
 " Theme settings
-colorscheme gruvbox
-set background=dark
+color dracula
 
 " Indent line settings
 let g:indentLine_color_dark=1

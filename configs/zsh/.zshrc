@@ -5,7 +5,7 @@ fpath=(~/.zsh $fpath)
 autoload -Uz compinit && compinit
 
 # Theme of zsh
-ZSH_THEME="miloshadzic"
+ZSH_THEME="dracula"
 PROMPT_EOL_MARK=''
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
   ### Color for autoseggestions
@@ -23,7 +23,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# Aliases
+# Aliases and functions
   ### Bash
   alias ll="ls -alh --group-directories-first"
   alias vim="nvim"
@@ -36,6 +36,25 @@ source $ZSH/oh-my-zsh.sh
   alias gh="git log --pretty=format:'%Cred%h %C(#FF7F50)%d %Cgreen[%an] %cr%n%n%B' --graph"
   alias gb="git branch"
   alias go="git checkout"
+
+gprev() {
+  for i in {1.."$1"}; do
+    echo -n  "$i\t";
+    git rev-parse --symbolic-full-name @{-$i};
+  done
+}
+
+grew() {
+  git rebase HEAD~"$1" -i;
+}
+
+gdn() {
+  git diff -- $(git ls-files --modified | sed -n "$1p")
+}
+
+gcn() {
+  git checkout -- $(git ls-files --modified | sed -n "$1p")
+}
 
 # Fix for arrow-key searching
   ### start typing + [Up-Arrow] - fuzzy find history forward
