@@ -56,6 +56,10 @@ gcn() {
   git checkout -- $(git ls-files --modified | sed -n "$1p")
 }
 
+grn() {
+  git reset -- $(git ls-files --modified | sed -n "$1p")
+}
+
 # Fix for arrow-key searching
   ### start typing + [Up-Arrow] - fuzzy find history forward
   if [[ "${terminfo[kcuu1]}" != "" ]]; then
