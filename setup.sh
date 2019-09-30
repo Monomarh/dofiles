@@ -7,8 +7,7 @@ echo '| (_| | (_) | |_|  _| | |  __/\__ \ \__ \  __/ |_| |_| | |_) |'
 echo ' \__,_|\___/ \__|_| |_|_|\___||___/ |___/\___|\__|\__,_| .__/ '
 echo '                                                       |_|    '
 
-spin()
-{
+spin() {
   spinner="/|\\-/|\\-"
   while :
   do
@@ -21,14 +20,12 @@ spin()
   done
 }
 
-spinStart()
-{
+spinStart() {
   spin &
   SPIN_PID=$!
 }
 
-spinEnd()
-{
+spinEnd() {
   if [ "$SPIN_PID" ]; then
     kill -9 "$SPIN_PID"
     unset SPIN_PID
@@ -47,20 +44,19 @@ if [ "$isGitConf" = 'y' ] || [ "$isGitConf" = 'Y' ]; then
     echo -n "Your git $existGitName(y/n)? "; read -rs isExistGitNameValid; echo
     if [ "$isExistGitNameValid" = 'n' ] || [ "$isExistGitNameValid" = 'N' ]; then
       echo -en 'Enter you git username: '; read -r gitName
-      sed -i "s/  name =.*/  name = $gitName/gi" "$HOME"/dotfiles/configs/git/.gitconfig
+      sed -i "s/\tname =.*/\tname = $gitName/gi" "$HOME"/dotfiles/configs/git/.gitconfig
     fi
 
     existGitEmail=$(grep 'email =' "$HOME"/dotfiles/configs/git/.gitconfig | sed 's/=/is/' | sed 's/  //')
     echo -n "Your git $existGitEmail(y/n)? "; read -rs isExistGitEmailValid; echo
     if [ "$isExistGitEmailValid" = 'n' ] || [ "$isExistGitEmailValid" = 'N' ]; then
       echo -en 'Enter you git email: '; read -r gitName
-      sed -i "s/  email =.*/  email = $gitName/gi" "$HOME"/dotfiles/configs/git/.gitconfig
+      sed -i "s/\temail =.*/\temail = $gitName/gi" "$HOME"/dotfiles/configs/git/.gitconfig
     fi
   else
     echo -en 'Enter you git email: '; read -r gitEmail
     echo -en 'Enter you git username: '; read -r gitName
-    sed "s/  email =/  email = $gitEmail/gi; s/  name =/  name = $gitName/gi" \
-      "$HOME"/dotfiles/configs/git/.gitconfig_base > "$HOME"/dotfiles/configs/git/.gitconfig
+    sed -i "s/\temail =/\temail = $gitEmail/gi; s/\tname =/\tname = $gitName/gi" "$HOME"/dotfiles/configs/git/.gitconfig
   fi
 
   spinStart
