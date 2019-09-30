@@ -1,28 +1,28 @@
 [user]
-  email =
-  name =
+	email =
+	name =
 [core]
-  excludesfile = ~/dotfiles/configs/git/.gitignore
-  editor = nvim
-  pager = tr -d '\\r' | less -REX
-  whitespace = trailing-space,space-before-tab
+	excludesfile = ~/dotfiles/configs/git/.gitignore
+	editor = nvim
+	pager = tr -d '\\r' | less -REX
+	whitespace = trailing-space,space-before-tab
 [apply]
-  whitespace = fix
+	whitespace = fix
 [diff]
-  tool = vimdiff
+	tool = vimdiff
 [difftool]
-  prompt = false
+	prompt = false
 [mergetool]
-  keepBackup = false
+	keepBackup = false
 [mergetool "nvim"]
-  cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
+	cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 [commit]
-  verbose = true
+	verbose = true
 [color]
-  ui = true
+	ui = true
 [color "diff"]
-  whitespace = red reverse
+	whitespace = red reverse
 [alias]
-  commend = commit --amend --no-edit
-  branches = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
-  st = log --graph --abbrev-commit --decorate --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
+	commend = commit --amend --no-edit
+	branches = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+	st = log --graph --abbrev-commit --decorate --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
