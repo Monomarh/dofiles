@@ -4,19 +4,20 @@ fpath=(~/.zsh $fpath)
 
 autoload -Uz compinit && compinit
 
+ZSH_CUSTOM="$HOME"/dotfiles/configs/oh-my-zsh/
+
 # Theme of zsh
-ZSH_THEME="dracula"
+ZSH_THEME="miloshadzic-custom"
 PROMPT_EOL_MARK=''
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
   ### Color for autoseggestions
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=yellow"
 
 plugins=(
   git
-  gitfast
   zsh-syntax-highlighting
   zsh-autosuggestions
   vi-mode
+  web-search
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -76,3 +77,8 @@ grn() {
 
 # Source files with additional alias
 source ~/.zshrc_alias
+
+eval $(thefuck --alias)
+alias grep_debug="grep -E 'alert|debugger|console\.log|var_dump|die'"
+
+export TERM=xterm-color

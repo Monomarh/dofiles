@@ -23,10 +23,11 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'sumpygump/php-documentor-vim', {'for': 'php'}
   " Theme section
   Plug 'ryanoasis/vim-devicons'
-  Plug 'Yggdroot/indentLine'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'dracula/vim'
+  Plug 'jacoborus/tender.vim'
+  " Hard mode
+  Plug 'takac/vim-hardtime'
 call plug#end()
 
 " Nvim settings
@@ -45,11 +46,24 @@ set autoread
 syntax on
 
 " Theme settings
-color dracula
+if (has("termguicolors"))
+  set termguicolors
+endif
 
-" Indent line settings
-let g:indentLine_color_dark=1
-let g:indentLine_char_list='.'
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+" For Neovim 0.1.3 and 0.1.4
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+" Theme
+syntax enable
+colorscheme tender
+let g:lightline = { 'colorscheme': 'tender' }
+let g:airline_theme = 'tender'
 
 " Helpful files for nvim redactor
 set noswapfile

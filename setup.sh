@@ -77,8 +77,19 @@ if [ "$isZshConf" = 'y' ] || [ "$isZshConf" = 'Y' ]; then
 
   spinStart
 
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  chsh -s /usr/bin/zsh
+
   ln -sf "$HOME"/dotfiles/configs/zsh/.zshrc "$HOME"/.zshrc
+
+  mkdir -p "$HOME"/.zhs/_git
   curl -o "$HOME"/.zsh/_git https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
+
+  # zsh-autosuggestions plugin
+  git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME"/dotfiles/configs/oh-my-zsh/plugins/zsh-autosuggestions
+
+  # zsh-syntax-highlighting plugin
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME"/dotfiles/configs/oh-my-zsh/plugins/zsh-syntax-highlighting
 
   sleep 2
   spinEnd
