@@ -27,7 +27,7 @@ source $ZSH/oh-my-zsh.sh
 # Aliases and functions
   ### Bash
   alias ll="ls -alh --group-directories-first"
-  alias vim="nvim"
+  alias le="less --tabs=4 -RNFX"
   alias sudo="sudo "
   ### GIT
   alias ga="git add"
@@ -59,6 +59,25 @@ gcn() {
 
 grn() {
   git reset -- $(git ls-files --modified | sed -n "$1p")
+}
+
+previous() {
+    commitCount="${1:-10}"
+
+    if [[ "$commitCount" != <-> ]]; then
+        echo -en 'Numeric value must be in parameter'
+        return 0
+    fi
+
+    for i in {1..$commitCount}; do
+        echo -n "@{-$i} - "
+        git rev-parse --abbrev-ref "@{-$i}"
+    done
+
+    echo -en 'Enter commit number(n/q for cancel): '; read -r
+    if [[ "$REPLY" != 'n' ]] && [[ "$REPLY" != 'q' ]]; then
+        git checkout $(git rev-parse --abbrev-ref "@{-$REPLY}")
+    fi
 }
 
 # Fix for arrow-key searching
