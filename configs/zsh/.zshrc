@@ -62,22 +62,46 @@ grn() {
 }
 
 previous() {
-    commitCount="${1:-10}"
+  commitCount="${1:-10}"
 
-    if [[ "$commitCount" != <-> ]]; then
-        echo -en 'Numeric value must be in parameter'
-        return 0
-    fi
+  if [[ "$commitCount" != <-> ]]; then
+    echo -en 'Numeric value must be in parameter'
+    return 0
+  fi
 
-    for i in {1..$commitCount}; do
-        echo -n "@{-$i} - "
-        git rev-parse --abbrev-ref "@{-$i}"
-    done
+  for i in {1..$commitCount}; do
+    echo -n "@{-$i} - "
+    git rev-parse --abbrev-ref "@{-$i}"
+  done
 
-    echo -en 'Enter commit number(n/q for cancel): '; read -r
-    if [[ "$REPLY" != 'n' ]] && [[ "$REPLY" != 'q' ]]; then
-        git checkout $(git rev-parse --abbrev-ref "@{-$REPLY}")
-    fi
+  echo -en 'Enter commit number(n/q for cancel): '; read -r
+  if [[ "$REPLY" != 'n' ]] && [[ "$REPLY" != 'q' ]]; then
+    git checkout $(git rev-parse --abbrev-ref "@{-$REPLY}")
+  fi
+}
+
+stash() {
+   git stash list
+
+   echo -en 'Enter stash number(n/q for cancel): '; read -r
+   if [[ "$REPLY" != 'n' ]] && [[ "$REPLY" != 'q' ]]; then
+     git stash show -p "stash@{$REPLY}"
+   else
+     return;
+   fi
+
+   stashNumber="$REPLY"
+
+   echo -en 'What should do with this stash?(d - delete, a - apply, p - pop, n/q for cancel): '; read -r
+   if [[ "$REPLY" == 'n' ]] && [[ "$REPLY" == 'q' ]]; then
+     return;
+   elif [[ "$REPLY" == 'd' ]]; then
+     git stash drop "stash@{$stashNumber}"
+   elif [[ "$REPLY" == 'p' ]]; then
+     git stash pop "stash@{$stashNumber}"
+   elif [[ "$REPLY" == 'a' ]]; then
+     git stash apply "stash@{$stashNumber}"
+   fi
 }
 
 # Fix for arrow-key searching
