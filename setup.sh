@@ -116,6 +116,23 @@ else
   echo -e '\nNot setup'
 fi
 
+echo -n 'Would you setup vim configs(y/n)? '
+read -rs isVimConf
+if [ "$isVimConf" = 'y' ] || [ "$isVimConf" = 'Y' ]; then
+  echo -e '\nSetting vim configs...'
+
+  spinStart
+
+  ln -sf "$HOME"/dotfiles/configs/vim/.vimrc "$HOME"/.vimrc
+
+  sleep 2
+  spinEnd
+
+  echo -e '\010Installation of nvim configs is completed!\n'
+else
+  echo -e '\nNot setup'
+fi
+
 echo -n 'Would you setup nvim configs(y/n)? '
 read -rs isNvimConf
 if [ "$isNvimConf" = 'y' ] || [ "$isNvimConf" = 'Y' ]; then
