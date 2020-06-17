@@ -25,7 +25,8 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'ryanoasis/vim-devicons'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'jacoborus/tender.vim'
+  " Plug 'jacoborus/tender.vim'
+  Plug 'eskilop/NorthernLights.vim'
   " Hard mode
   Plug 'takac/vim-hardtime'
 call plug#end()
@@ -61,7 +62,9 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " Theme
 syntax enable
-colorscheme tender
+" colorscheme tender
+colorscheme northernlights
+set background=dark
 let g:lightline = { 'colorscheme': 'tender' }
 let g:airline_theme = 'tender'
 
@@ -97,3 +100,11 @@ map <Leader> <Plug>(easymotion-prefix)
 au BufRead,BufNewFile *.php inoremap <buffer> <C-P> :call PhpDoc()<CR>
 au BufRead,BufNewFile *.php nnoremap <buffer> <C-P> :call PhpDoc()<CR>
 au BufRead,BufNewFile *.php vnoremap <buffer> <C-P> :call PhpDocRange()<CR>
+
+function GitDiff()
+    :silent write
+    :silent execute '!git diff --color=always -- ' . expand('%:p') . ' | less --RAW-CONTROL-CHARS'
+    :redraw!
+endfunction
+
+nnoremap <leader>gd :call GitDiff()<cr>

@@ -1,5 +1,8 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export TERM=xterm-color
+export PATH=~/.local/bin:$HOME/.composer/vendor/bin:$PATH
+
 fpath=(~/.zsh $fpath)
 
 autoload -Uz compinit && compinit
@@ -18,6 +21,7 @@ plugins=(
   zsh-autosuggestions
   vi-mode
   web-search
+  docker
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -29,6 +33,7 @@ source $ZSH/oh-my-zsh.sh
   alias ll="ls -alh --group-directories-first"
   alias le="less --tabs=4 -RNFX"
   alias sudo="sudo "
+  alias echoUIDGID='echo "\nUSER_ID=$(id -u)\nGROUP_ID=$(id -g)"'
   ### GIT
   alias ga="git add"
   alias gc="git commit"
@@ -37,72 +42,6 @@ source $ZSH/oh-my-zsh.sh
   alias gh="git log --pretty=format:'%Cred%h %C(#FF7F50)%d %Cgreen[%an] %cr%n%n%B' --graph"
   alias gb="git branch"
   alias go="git checkout"
-
-gprev() {
-  for i in {1.."$1"}; do
-    echo -n  "$i\t";
-    git rev-parse --symbolic-full-name @{-$i};
-  done
-}
-
-grew() {
-  git rebase HEAD~"$1" -i;
-}
-
-gdn() {
-  git diff -- $(git ls-files --modified | sed -n "$1p")
-}
-
-gcn() {
-  git checkout -- $(git ls-files --modified | sed -n "$1p")
-}
-
-grn() {
-  git reset -- $(git ls-files --modified | sed -n "$1p")
-}
-
-previous() {
-  commitCount="${1:-10}"
-
-  if [[ "$commitCount" != <-> ]]; then
-    echo -en 'Numeric value must be in parameter'
-    return 0
-  fi
-
-  for i in {1..$commitCount}; do
-    echo -n "@{-$i} - "
-    git rev-parse --abbrev-ref "@{-$i}"
-  done
-
-  echo -en 'Enter commit number(n/q for cancel): '; read -r
-  if [[ "$REPLY" != 'n' ]] && [[ "$REPLY" != 'q' ]]; then
-    git checkout $(git rev-parse --abbrev-ref "@{-$REPLY}")
-  fi
-}
-
-stash() {
-   git stash list
-
-   echo -en 'Enter stash number(n/q for cancel): '; read -r
-   if [[ "$REPLY" != 'n' ]] && [[ "$REPLY" != 'q' ]]; then
-     git stash show -p "stash@{$REPLY}"
-   else
-     return;
-   fi
-
-   stashNumber="$REPLY"
-
-   echo -en 'What should do with this stash?(d - delete, a - apply, p - pop, n/q for cancel): '; read -r
-   if [[ "$REPLY" == 'n' ]] && [[ "$REPLY" == 'q' ]]; then
-     return;
-   elif [[ "$REPLY" == 'd' ]]; then
-     git stash drop "stash@{$stashNumber}"
-   elif [[ "$REPLY" == 'p' ]]; then
-     git stash pop "stash@{$stashNumber}"
-   elif [[ "$REPLY" == 'a' ]]; then
-     git stash apply "stash@{$stashNumber}"
-   fi
-}
 
 # Fix for arrow-key searching
   ### start typing + [Up-Arrow] - fuzzy find history forward
@@ -120,8 +59,10 @@ stash() {
 
 # Source files with additional alias
 source ~/.zshrc_alias
+source ~/.zshrc_function
 
 eval $(thefuck --alias)
-alias grep_debug="grep -E 'alert|debugger|console\.log|var_dump|die'"
 
-export TERM=xterm-color
+if [ -f /etc/profile.d/bash_completion.sh ]; then
+  . /etc/profile.d/bash_completion.sh
+fi

@@ -80,6 +80,8 @@ if [ "$isZshConf" = 'y' ] || [ "$isZshConf" = 'Y' ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
   ln -sf "$HOME"/dotfiles/configs/zsh/.zshrc "$HOME"/.zshrc
+  ln -sf "$HOME"/dotfiles/configs/zsh/.zshrc_alias "$HOME"
+  ln -sf "$HOME"/dotfiles/configs/zsh/.zshrc_function "$HOME"
 
   mkdir -p "$HOME"/.zhs/
   curl -o "$HOME"/.zsh/ https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
