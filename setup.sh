@@ -26,32 +26,57 @@ spinStart() {
 }
 
 spinEnd() {
+  sleep 1
+
   if [ "$SPIN_PID" ]; then
     kill -9 "$SPIN_PID"
     unset SPIN_PID
   fi
 }
 
+setupQuestionEcho() {
+  echo -n "Would you setup $1 configs(y/n)? "
+}
+
+startSetupEcho() {
+  echo -e "\nSetting $1 configs..."
+}
+
+completeSetupEcho() {
+  echo -e "\010Installation of $1 configs is completed!\n"
+}
+
+notSetupEcho() {
+  echo -e '\nNot setup'
+}
+
+checkForPackage() {
+  command -v "$1" &> /dev/null; [ $? -ne 0 ] && sudo apt install "$1"
+}
+
 trap spinEnd $(seq 0 15)
 
 # create symlinks to dotfiles
-echo -n 'Would you setup git configs(y/n)? '; read -rs isGitConf
-if [ "$isGitConf" = 'y' ] || [ "$isGitConf" = 'Y' ]; then
-  echo -e '\nSetting git configs...'
+git='git'
+setupQuestionEcho $git; read -rs
+if [ "$REPLY" = 'y' ] || [ "$REPLY" = 'Y' ]; then
+  startSetupEcho $git
+
+  checkForPackage $git
 
   if [ -e "$HOME/dotfiles/configs/git/.gitconfig" ]; then
     existGitName=$(grep 'name =' "$HOME"/dotfiles/configs/git/.gitconfig | sed 's/=/is/' | sed 's/  //')
-    echo -n "Your git $existGitName(y/n)? "; read -rs isExistGitNameValid; echo
-    if [ "$isExistGitNameValid" = 'n' ] || [ "$isExistGitNameValid" = 'N' ]; then
-      echo -en 'Enter you git username: '; read -r gitName
-      sed -i "s/\tname =.*/\tname = $gitName/gi" "$HOME"/dotfiles/configs/git/.gitconfig
+    echo -n "Your git $existGitName(y/n)? "; read -rs; echo
+    if [ "$REPLY" = 'n' ] || [ "$REPLY" = 'N' ]; then
+      echo -en 'Enter you git username: '; read -r
+      sed -i "s/\tname =.*/\tname = $REPLY/gi" "$HOME"/dotfiles/configs/git/.gitconfig
     fi
 
     existGitEmail=$(grep 'email =' "$HOME"/dotfiles/configs/git/.gitconfig | sed 's/=/is/' | sed 's/  //')
-    echo -n "Your git $existGitEmail(y/n)? "; read -rs isExistGitEmailValid; echo
-    if [ "$isExistGitEmailValid" = 'n' ] || [ "$isExistGitEmailValid" = 'N' ]; then
-      echo -en 'Enter you git email: '; read -r gitName
-      sed -i "s/\temail =.*/\temail = $gitName/gi" "$HOME"/dotfiles/configs/git/.gitconfig
+    echo -n "Your git $existGitEmail(y/n)? "; read -rs; echo
+    if [ "$REPLY" = 'n' ] || [ "$REPLY" = 'N' ]; then
+      echo -en 'Enter you git email: '; read -r
+      sed -i "s/\temail =.*/\temail = $REPLY/gi" "$HOME"/dotfiles/configs/git/.gitconfig
     fi
   else
     echo -en 'Enter you git email: '; read -r gitEmail
@@ -63,25 +88,24 @@ if [ "$isGitConf" = 'y' ] || [ "$isGitConf" = 'Y' ]; then
 
   ln -sf "$HOME"/dotfiles/configs/git/.gitconfig "$HOME"/.gitconfig
 
-  sleep 2
-  spinEnd
-
-  echo -e '\010Installation of git configs is completed!\n'
+  spinEnd; completeSetupEcho $git
 else
-  echo -e '\nNot setup'
+  notSetupEcho
 fi
 
-echo -n 'Would you setup zsh configs(y/n)? '; read -rs isZshConf
-if [ "$isZshConf" = 'y' ] || [ "$isZshConf" = 'Y' ]; then
-  echo -e '\nSetting zsh configs...'
+zsh='zsh'
+setupQuestionEcho $zsh; read -rs
+if [ "$REPLY" = 'y' ] || [ "$REPLY" = 'Y' ]; then
+  startSetupEcho $zsh; spinStart
 
-  spinStart
+  checkForPackage $zsh
+  checkForPackage curl
 
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-  ln -sf "$HOME"/dotfiles/configs/zsh/.zshrc "$HOME"/.zshrc
-  ln -sf "$HOME"/dotfiles/configs/zsh/.zshrc_alias "$HOME"
-  ln -sf "$HOME"/dotfiles/configs/zsh/.zshrc_function "$HOME"
+  ln -sf "$HOME"/dotfiles/configs/zsh/.zshrc "$HOME"/
+  ln -sf "$HOME"/dotfiles/configs/zsh/.zshrc_base_alias "$HOME"/
+  ln -sf "$HOME"/dotfiles/configs/zsh/.zshrc_function "$HOME"/
 
   mkdir -p "$HOME"/.zhs/
   curl -o "$HOME"/.zsh/ https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
@@ -93,61 +117,49 @@ if [ "$isZshConf" = 'y' ] || [ "$isZshConf" = 'Y' ]; then
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME"/dotfiles/configs/oh-my-zsh/plugins/zsh-syntax-highlighting
 
   chsh -s /usr/bin/zsh
-  sleep 2
-  spinEnd
 
-  echo -e '\010Installation of zsh configs is completed!\n'
+  spinEnd; completeSetupEcho $zsh
 else
-  echo -e '\nNot setup'
+  notSetupEcho
 fi
 
-echo -n 'Would you setup tmux configs(y/n)? '
-read -rs isTmuxConf
-if [ "$isTmuxConf" = 'y' ] || [ "$isTmuxConf" = 'Y' ]; then
-  echo -e '\nSetting tmux configs...'
+tmux='tmux'
+setupQuestionEcho $tmux; read -rs
+if [ "$REPLY" = 'y' ] || [ "$REPLY" = 'Y' ]; then
+  startSetupEcho $tmux; spinStart
 
-  spinStart
+  checkForPackage $tmux
 
-  ln -sf "$HOME"/dotfiles/configs/tmux/.tmux.conf "$HOME"/.tmux.conf
+  ln -sf "$HOME"/dotfiles/configs/tmux/.tmux.conf "$HOME"/
 
-  sleep 2
-  spinEnd
-
-  echo -e '\010Installation of tmux configs is completed!\n'
+  spinEnd; completeSetupEcho $tmux
 else
-  echo -e '\nNot setup'
+  notSetupEcho
 fi
 
-echo -n 'Would you setup vim configs(y/n)? '
-read -rs isVimConf
-if [ "$isVimConf" = 'y' ] || [ "$isVimConf" = 'Y' ]; then
-  echo -e '\nSetting vim configs...'
+vim='vim'
+setupQuestionEcho $vim; read -rs
+if [ "$REPLY" = 'y' ] || [ "$REPLY" = 'Y' ]; then
+  startSetupEcho $vim; spinStart
 
-  spinStart
+  checkForPackage $vim
 
-  ln -sf "$HOME"/dotfiles/configs/vim/.vimrc "$HOME"/.vimrc
+  ln -sf "$HOME"/dotfiles/configs/vim/.vimrc "$HOME"/
 
-  sleep 2
-  spinEnd
-
-  echo -e '\010Installation of nvim configs is completed!\n'
+  spinEnd; completeSetupEcho $vim
 else
-  echo -e '\nNot setup'
+  notSetupEcho
 fi
 
-echo -n 'Would you setup nvim configs(y/n)? '
-read -rs isNvimConf
-if [ "$isNvimConf" = 'y' ] || [ "$isNvimConf" = 'Y' ]; then
-  echo -e '\nSetting nvim configs...'
+nvim='nvim'
+setupQuestionEcho $nvim; read -rs
+if [ "$REPLY" = 'y' ] || [ "$REPLY" = 'Y' ]; then
+  startSetupEcho $nvim; spinStart
 
-  spinStart
+  mkdir -p "$HOME"/.config/nvim/
+  ln -sf "$HOME"/dotfiles/configs/nvim/init.vim "$HOME"/.config/nvim/
 
-  ln -sf "$HOME"/dotfiles/configs/nvim/init.vim "$HOME"/.config/nvim/init.vim
-
-  sleep 2
-  spinEnd
-
-  echo -e '\010Installation of nvim configs is completed!\n'
+  spinEnd; completeSetupEcho $nvim
 else
-  echo -e '\nNot setup'
+  notSetupEcho
 fi

@@ -1,3 +1,4 @@
+### GIT ###
 grew() {
   git rebase HEAD~"$1" -i;
 }
@@ -14,15 +15,16 @@ grn() {
   git reset -- $(git ls-files --modified | sed -n "$1p")
 }
 
+### Checkout on previous branch
 previous() {
-  commitCount="${1:-10}"
+  branchCount="${1:-10}"
 
-  if [[ "$commitCount" != <-> ]]; then
+  if [[ "$branchCount" != <-> ]]; then
     echo -en 'Numeric value must be in parameter'
     return 0
   fi
 
-  for i in {1..$commitCount}; do
+  for i in {1..$branchCount}; do
     echo -n "@{-$i} - "
     git rev-parse --abbrev-ref "@{-$i}"
   done
@@ -33,6 +35,7 @@ previous() {
   fi
 }
 
+### Interactive managment for git stash
 stash() {
    git stash list
 
@@ -55,4 +58,56 @@ stash() {
    elif [[ "$REPLY" == 'a' ]]; then
      git stash apply "stash@{$stashNumber}"
    fi
+}
+
+### FZF ###
+### Find in files
+fif() {
+  if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
+  rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
+}
+
+### Interactive history
+fh() {
+  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -r 's/ *[0-9]*\*? *//' | sed -r 's/\\/\\\\/g')
+}
+
+### Interactive pid kill
+fkill() {
+    local pid
+    if [ "$UID" != "0" ]; then
+        pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
+    else
+        pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+    fi
+
+    if [ "x$pid" != "x" ]
+    then
+        echo $pid | xargs kill -${1:-9}
+    fi
+}
+
+### FZF DOCKER ###
+### Docker container start and attach
+function da() {
+  local cid
+  cid=$(docker ps -a | sed 1d | fzf -1 -q "$1" | awk '{print $1}')
+
+  [ -n "$cid" ] && docker start "$cid" && docker attach "$cid"
+}
+
+### Docker container stop
+function ds() {
+  local cid
+  cid=$(docker ps | sed 1d | fzf -q "$1" | awk '{print $1}')
+
+  [ -n "$cid" ] && docker stop "$cid"
+}
+
+### Docker container remove
+function drm() {
+  local cid
+  cid=$(docker ps -a | sed 1d | fzf -q "$1" | awk '{print $1}')
+
+  [ -n "$cid" ] && docker rm "$cid"
 }

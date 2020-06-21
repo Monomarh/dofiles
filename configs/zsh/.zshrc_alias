@@ -1,7 +1,0 @@
-### SOME HELPFUL ###
-alias catc='pygmentize -g'
-alias grep_debug="grep -E 'alert|debugger|console\.log|var_dump|die'"
-alias bc="bin/console "
-alias dc="docker "
-alias dcc="docker-compose "
-### SOME HELPFUL ###

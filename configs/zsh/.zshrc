@@ -58,11 +58,14 @@ source $ZSH/oh-my-zsh.sh
   fi
 
 # Source files with additional alias
-source ~/.zshrc_alias
+source ~/.zshrc_base_alias
 source ~/.zshrc_function
+[ -f ~/.zshrc_custom_alias ] && source ~/.zshrc_custom_alias
 
-eval $(thefuck --alias)
+command -v thefuck &> /dev/null; [ $? -eq 0 ] && eval $(thefuck --alias)
 
 if [ -f /etc/profile.d/bash_completion.sh ]; then
   . /etc/profile.d/bash_completion.sh
 fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
