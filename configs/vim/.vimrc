@@ -21,9 +21,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'sumpygump/php-documentor-vim', {'for': 'php'}
   " Theme section
   Plug 'ryanoasis/vim-devicons'
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-  Plug 'jacoborus/tender.vim'
+  Plug 'itchyny/lightline.vim'
+  Plug 'fcpg/vim-fahrenheit'
 call plug#end()
 
 " vim settings
@@ -42,10 +41,6 @@ set autoread
 syntax on
 
 " Theme settings
-if (has("termguicolors"))
-  set termguicolors
-endif
-
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -53,10 +48,23 @@ if exists('+termguicolors')
 endif
 
 " Theme
-syntax enable
-colorscheme tender
-let g:lightline = { 'colorscheme': 'tender' }
-let g:airline_theme = 'tender'
+syntax on
+set t_Co=256
+set laststatus=2
+set cursorline
+colorscheme fahrenheit
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ 'active': {
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent', 'allLines' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+      \ },
+      \ 'component': {
+      \   'charvaluehex': '0x%B',
+      \   'allLines': '%L'
+      \ }
+      \ }
 
 " Helpful files for vim redactor
 set noswapfile
@@ -65,28 +73,8 @@ set noundofile
 
 " Variables
 let g:mapleader=','
-" If something goes wrong with ruby gem neovim
-""" let g:ruby_host_prog='~/.gem/bin/neovim-ruby-host'
-" Airplane settings
-let g:airline_theme='zenburn'
-let g:airline_powerline_fonts=1
-let g:airline#extensions#tabline#enabled=1
-let g:airline#extensions#tabline#tab_min_count=0
-let g:airline#extensions#tabline#formatter='unique_tail'
-let g:airline#extensions#tabline#show_buffers=0
-let g:airline#extensions#tabline#fnamemod=':t'
-let g:airline_section_warning=''
-let g:airline_section_error=''
-let g:airline#extensions#tabline#show_close_button=0
-let g:airline#extensions#tabline#left_alt_sep=''
-let g:airline#extensions#tagbar#enabled=0
-let g:airline#extensions#tabline#show_tab_nr=1
-let g:airline#extensions#tabline#tab_nr_type=1
 
 " Mappings
 map <C-n> :NERDTreeToggle<CR>
 map <Leader> <Plug>(easymotion-prefix)
 
-au BufRead,BufNewFile *.php inoremap <buffer> <C-P> :call PhpDoc()<CR>
-au BufRead,BufNewFile *.php nnoremap <buffer> <C-P> :call PhpDoc()<CR>
-au BufRead,BufNewFile *.php vnoremap <buffer> <C-P> :call PhpDocRange()<CR>
