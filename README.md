@@ -3,8 +3,8 @@
 ### Include configs for:
 
 * `zsh`
-    * `aliases` [file](configs/zsh/.zshrc_base_alias)
-    * `functions` [file](configs/zsh/.zshrc_function)
+    * [`aliases`](configs/zsh/.zshrc_base_alias)
+    * [`functions`](configs/zsh/.zshrc_function)
 * `oh-my-zsh`
     * `sobole` theme with two lines
     * `miloshadzic` theme with two lines
@@ -17,7 +17,12 @@
     * `.gitconfig`
     * `.gitignore`
 
-### There are some useful tips (All links are clickable):
+### Examples of basic config for:
+
+* [`apache2`](examples/apache2/example.loc.conf)
+* [`nginx`](examples/nginx/example.loc)
+
+### There are some useful tips:
 
 * [`mysql`](tips/mysql.md)
 * [`terminal`](tips/terminal.md)
