@@ -3,10 +3,6 @@ export ZSH="$HOME/.oh-my-zsh"
 export TERM=xterm-color
 export PATH=~/.local/bin:$HOME/.composer/vendor/bin:$PATH
 
-fpath=(~/.zsh $fpath)
-
-autoload -Uz compinit && compinit
-
 ZSH_CUSTOM="$HOME"/dotfiles/configs/oh-my-zsh/
 
 # Theme of zsh
@@ -42,6 +38,8 @@ source $ZSH/oh-my-zsh.sh
   alias gh="git log --pretty=format:'%Cred%h %C(#FF7F50)%d %Cgreen[%an] %cr%n%n%B' --graph"
   alias gb="git branch"
   alias go="git checkout"
+  alias gd="git diff"
+  alias gds="git diff --staged"
 
 # Fix for arrow-key searching
   ### start typing + [Up-Arrow] - fuzzy find history forward
@@ -58,8 +56,7 @@ source $ZSH/oh-my-zsh.sh
   fi
 
 # Source files with additional alias
-source ~/.zshrc_base_alias
-source ~/.zshrc_function
+source ~/.zshrc_base_alias && source ~/.zshrc_function
 [ -f ~/.zshrc_custom_alias ] && source ~/.zshrc_custom_alias
 
 command -v thefuck &> /dev/null; [ $? -eq 0 ] && eval $(thefuck --alias)
