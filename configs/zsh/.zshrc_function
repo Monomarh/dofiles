@@ -107,7 +107,14 @@ function ds() {
 ### Docker container remove
 function drm() {
   local cid
-  cid=$(docker ps -a | sed 1d | fzf -q "$1" | awk '{print $1}')
+  cid=$(docker ps -a | sed 1d | fzf -m -q "$1" | awk '{print $1}')
 
-  [ -n "$cid" ] && docker rm "$cid"
+  [ -n "$cid" ] && echo "$cid" | xargs docker rm
+}
+
+function drmi() {
+  local cid
+  cid=$(docker images | sed 1d | fzf -m -q "$1" | awk '{print $3}')
+
+  [ -n "$cid" ] && echo "$cid" | xargs docker rmi
 }
