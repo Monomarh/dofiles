@@ -1,5 +1,9 @@
 # PhpStorm
 .idea
+.phpstorm.meta.php
+
+# VSCode
+.vscode
 
 # Php-cs-fixer
 .php_cs.cache

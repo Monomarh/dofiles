@@ -1,10 +1,10 @@
 [user]
-	email =
-	name =
+	email = r.monomarh@gmail.com
+	name = monomarh
 [core]
 	excludesfile = ~/dotfiles/configs/git/.gitignore
-	editor = nvim
-	pager = diff-so-fancy | less --tabs=4 -RNFX
+	editor = vim
+	pager = diff-so-fancy | bat
 	whitespace = trailing-space,space-before-tab
 [apply]
 	whitespace = fix
@@ -42,3 +42,13 @@
 	oldHighlight = red bold 52
 	newNormal = green bold
 	newHighlight = green bold 22
+[diff-so-fancy]
+	rulerWidth = 10
+
+[credential]
+	helper = store
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

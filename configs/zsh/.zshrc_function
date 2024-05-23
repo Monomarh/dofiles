@@ -26,7 +26,7 @@ previous() {
 
   for i in {1..$branchCount}; do
     echo -n "@{-$i} - "
-    git rev-parse --abbrev-ref "@{-$i}"
+    git rev-parse --abbrev-ref "@{-$i}" 2> /dev/null
   done
 
   echo -en 'Enter commit number(n/q for cancel): '; read -r

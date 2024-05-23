@@ -15,19 +15,16 @@ call plug#begin('~/.vim/plugged')
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
-  " PHP section
-  Plug 'StanAngeloff/php.vim', {'for': 'php'}
-  Plug 'arnaud-lb/vim-php-namespace', {'for': 'php'}
-  Plug 'sumpygump/php-documentor-vim', {'for': 'php'}
   " Theme section
   Plug 'ryanoasis/vim-devicons'
   Plug 'itchyny/lightline.vim'
   Plug 'fcpg/vim-fahrenheit'
+  " Go section
+  Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 call plug#end()
 
 " vim settings
 set number
-set list
 set hlsearch
 set incsearch
 set expandtab
@@ -73,6 +70,7 @@ set noundofile
 
 " Variables
 let g:mapleader=','
+let g:airline_powerline_fonts = 1
 
 " Mappings
 map <C-n> :NERDTreeToggle<CR>

@@ -1,11 +1,12 @@
 ### SOME HELPFUL ###
 alias catc='pygmentize -g'
+alias xo='xdg-open'
 alias grep_debug="grep -E 'alert|debugger|console\.log|var_dump|die'"
 ### PHP
 alias bc="bin/console "
 ### Docker
 alias dc="docker "
-alias dcc="docker-compose "
+alias dcc="docker compose "
 alias dcrm="dc ps -a | grep -E 'Exited ((127|100|1))' | awk '{print $1}' | xargs docker rm"
 ### FZF with bat
 alias fzb="fzf --height 40% --layout reverse --info inline --border --preview 'bat --style=numbers --color=always --line-range :500 {}'"
