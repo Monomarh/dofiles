@@ -3,43 +3,36 @@
 ### Include configs for:
 
 * `zsh`
-    * [`aliases`](configs/zsh/.zshrc_base_alias)
-    * [`functions`](configs/zsh/.zshrc_function)
+    * [`aliases`](modules/zsh/configs/.zshrc_aliases)
+    * [`functions`](modules/zsh/configs/.zshrc_function)
 * `oh-my-zsh`
     * `sobole` theme with two lines
     * `miloshadzic` theme with two lines
     * `agnoster` theme with two lines
 * `tmux`
-* `vim`
-    * Nerd font
 * `nvim`
+  * Nerd font
 * `git`
     * `.gitconfig`
     * `.gitignore`
-
-### Examples of basic config for:
-
-* [`apache2`](examples/apache2/example.loc.conf)
-* [`nginx`](examples/nginx/example.loc)
 
 ### There are some useful tips:
 
 * [`mysql`](tips/mysql.md)
 * [`terminal`](tips/terminal.md)
 * [`utilities`](tips/utilities.md)
-* [`vim`](tips/vim.md) - In Russian
+* [`vim`](tips/vim.md)
 
 ## Dotfiles installation
 
-### Need to make the setup.sh file executable
+* Need to build the executable
 
 ```bash
-sudo chmod u+x setup.sh
+go build 
 ```
 
-### Run script
+* Run script
 
-Script has some interactive options (possible to choose which configs need to install)
 ```bash
-. setup.sh
+./dotfiles
 ```

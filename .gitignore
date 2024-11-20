@@ -1,2 +1,8 @@
+!modules/zsh/plugins/.gitkeep
+
 # Oh-my-zsh plugins destination
-/configs/oh-my-zsh/plugins/*
+modules/zsh/plugins/*
+modules/zsh/configs/.zcompdump*
+
+# bubletea logs
+output.log
