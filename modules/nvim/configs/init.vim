@@ -9,7 +9,6 @@ endif
 " Vim-plug bootstrap
 call plug#begin('~/.config/nvim/plugged')
   Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
-  Plug 'ycm-core/YouCompleteMe'
   Plug 'rking/ag.vim'
   Plug 'jiangmiao/auto-pairs'
   Plug 'easymotion/vim-easymotion'

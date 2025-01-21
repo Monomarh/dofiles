@@ -52,7 +52,7 @@ func (m Module) Exec() any {
 		fmt.Sprintf("rm -rf %s/%s", tmp, batFolder),
 
 		// Install diff-so-fancy for git pager
-		fmt.Sprintf("wget -qO %s %s", tmp, diffSoFancyRepository),
+		fmt.Sprintf("wget -qO %s/diff-so-fancy %s", tmp, diffSoFancyRepository),
 		fmt.Sprintf("install --mode=u+rwx,go+rx --owner=%[1]s --group=%[1]s %s/diff-so-fancy %s/.local/bin/diff-so-fancy", m.user, tmp, home),
 	}
 

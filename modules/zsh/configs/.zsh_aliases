@@ -18,11 +18,12 @@ alias gd="git diff"
 alias gds="git diff --staged"
 
 ### SOME HELPFUL ###
+alias copy='xclip -in -selection clipboard'
 alias catc='pygmentize -g'
 alias xo='xdg-open'
 alias grep_debug="grep -E 'alert|debugger|console\.log|var_dump|die'"
 ### PHP
-alias bc="bin/console "
+alias bc="bin/console"
 ### Docker
 alias dc="docker "
 alias dcc="docker compose "
@@ -30,3 +31,7 @@ alias dcrm="dc ps -a | grep -E 'Exited ((127|100|1))' | awk '{print $1}' | xargs
 ### FZF with bat
 alias fzb="fzf --height 40% --layout reverse --info inline --border --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 ### SOME HELPFUL ###
+
+### Openvpn3
+alias itrap="xdg-settings set default-web-browser microsoft-edge.desktop && openvpn3 session-start -c itransition && xdg-settings set default-web-browser google-chrome.desktop"
+alias itrad="openvpn3 sessions-list | grep -ioP '/net/openvpn/v3/sessions/\w+' | xargs -I{} openvpn3 session-manage --path {} --disconnect"
